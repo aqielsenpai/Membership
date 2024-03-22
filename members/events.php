@@ -9,9 +9,27 @@ if (isset($_SESSION['sessionid'])) {
     echo "<script>alert('No session available. Please login.');</script>";
     echo "<script> window.location.replace('login.php')</script>";
 }
+//do not change up here
 
 include "../dbconnect.php";
-$sqlloadnews = "SELECT `news_id`, `news_title`, `news_desc`, `news_date` FROM `tbl_news` ";
+if (isset($_POST["submit"])) {
+    $event_name = $_POST["event_name"];
+    $event_description = $_POST["event_description"];
+    $event_date = $_POST["event_date"];
+    $sqlinsertevents = "INSERT INTO `tbl_events`( `event_name`, `event_description` , `event_date`) VALUES ('$event_name','$event_description','$event_date')";
+
+
+    if ($conn->query($sqlinsertevents) === TRUE) {
+
+        echo "<script> alert(' Success')</script>";
+        echo "<script> window.location.replace('events.php')</script>";
+    } else {
+        echo "<script> alert(' Failed')</script>";
+    }
+}
+
+
+$sqlloadevents = "SELECT `event_id`, `event_name`, `event_description`, `event_date`  FROM `tbl_events` ";
 $results_per_page = 10;
 if (isset($_GET['pageno'])) {
     $pageno = (int)$_GET['pageno'];
@@ -21,25 +39,21 @@ if (isset($_GET['pageno'])) {
     $page_first_result = ($pageno - 1) * $results_per_page;
 }
 
-$result = $conn->query($sqlloadnews);
+$result = $conn->query($sqlloadevents);
 $number_of_result = $result->num_rows;
 $number_of_page = ceil($number_of_result / $results_per_page);
-$sqlloadnews = $sqlloadnews . " LIMIT $page_first_result , $results_per_page ";
-$result = $conn->query($sqlloadnews);
+$sqlloadevents = $sqlloadevents . " LIMIT $page_first_result , $results_per_page ";
+$result = $conn->query($sqlloadevents);
 $starting_index = ($pageno - 1) * $results_per_page + 1;
 
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>My Basic Page</title>
+    <title>Admin Page</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
@@ -54,29 +68,32 @@ $starting_index = ($pageno - 1) * $results_per_page + 1;
         <a href="support.php" class="w3-bar-item w3-button w3-mobile">Support</a>
         <a href="profile.php" class="w3-bar-item w3-button w3-mobile">Profile</a>
         <a href="#" class="w3-bar-item w3-button w3-mobile">Logout</a>
+      
     </div>
 
-    <div class="w3-container w3-padding-large">
-        <?php
+
+    <div class="w3-container w3-padding-large" style = "height : 750px">
+        <?php //table
         if ($result->num_rows > 0) {
             echo "<table class = 'w3-table w3-striped'>";
-            echo "<tr>   <th>no</th>  <th>Title</th> <th>News</th> <th>Date</th>  </tr>";
+            echo "<tr><th>no</th><th>Title </th> <th>Events</th> <th>Date</th></tr>";
             $i = $starting_index;
             while ($row = $result->fetch_assoc()) {
 
-                $date = date_create($row['news_date']);
+                $date = date_create($row['event_date']);
                 $mydate = date_format($date, "d/m/Y h:i a");
-                $newsid = $row['news_id'];
+                $event_id = $row['event_id'];
 
                 echo "<tr><td>$i</td>
-                 <td>" . $row['news_title'] . "</td><td>" . $row['news_desc'] . "</td><td>" . $mydate . "</td>";
+                 <td>" . $row['event_name'] . "</td><td>" . $row['event_description'] . "</td><td>" . $mydate . "</td>";
                 $i++;
             }
             echo "</table>";
         }
         ?>
     </div>
-    <div class="w3-container w3-padding-large">
+
+    <div class="w3-container w3-padding-large"  >
         <?php
         $num = 1;
         if ($pageno == 1) {
@@ -89,7 +106,7 @@ $starting_index = ($pageno - 1) * $results_per_page + 1;
         echo "<div class=''>";
         echo "<center>";
         for ($page = 1; $page <= $number_of_page; $page++) {
-            echo '<a href = "index.php?pageno=' . $page . '" style = "text-decoration: none;" >&nbsp&nbsp' . $page . ' </a>';
+            echo '<a href = "events.php?pageno=' . $page . '" style = "text-decoration: none;" >&nbsp&nbsp' . $page . ' </a>';
         }
         echo " ( " . $pageno . " )";
         echo "</center>";
@@ -100,6 +117,6 @@ $starting_index = ($pageno - 1) * $results_per_page + 1;
 
 
 
+
 </body>
 
-</html>

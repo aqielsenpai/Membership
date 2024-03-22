@@ -83,7 +83,7 @@ $starting_index = ($pageno - 1) * $results_per_page + 1;
         <a href="index.php" class="w3-bar-item w3-button w3-mobile">News</a>
         <a href="events.php" class="w3-bar-item w3-button w3-mobile">Events/Activities</a>
         <a href="resources.php" class="w3-bar-item w3-button w3-mobile">Resources</a>
-        <a href="#" class="w3-bar-item w3-button w3-mobile">Support</a>
+        <a href="support.php" class="w3-bar-item w3-button w3-mobile">Support</a>
         <a href="membership.php" class="w3-bar-item w3-button w3-mobile">Membership</a>
         <a href="profile.php" class="w3-bar-item w3-button w3-mobile">Profile</a>
         <a href="#" class="w3-bar-item w3-button w3-mobile">Logout</a>
