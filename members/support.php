@@ -83,6 +83,7 @@ $starting_index = ($pageno - 1) * $results_per_page + 1;
         <a href="profile.php" class="w3-bar-item w3-button w3-mobile">Profile</a>
         <a href="#" class="w3-bar-item w3-button w3-mobile">Logout</a>
         <a class="w3-right w3-button" onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button w3-mobile"> New message</a>
+        
 
     </div>
 
@@ -100,7 +101,9 @@ $starting_index = ($pageno - 1) * $results_per_page + 1;
 
                 echo "<tr><td>$i</td>
                  <td>" . $row['message_title'] . "</td><td>" . $row['message_content'] . "</td><td>" . $mydate . "</td>";
-                 echo "<td> <a href = 'support.php?operation=delete&message_id=$message_id' onclick=\"return confirm('Are you sure?')\">Delete </a> &nbsp </td> </tr>";
+                 echo "<td> <a href = 'support.php?operation=delete&message_id=$message_id' onclick=\"return confirm('Are you sure?')\">Delete </a> &nbsp 
+                 <a href = 'messages.php?message_id=$message_id' > Details </a>
+                 </td> </tr>";
                 $i++;
             }
             echo "</table>";
