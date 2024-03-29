@@ -1,4 +1,8 @@
 <?php
+
+if (isset($_GET["logout"]) && $_GET["logout"] == 1) {
+    echo "<script>alert('Logout success');</script>";
+}
 if (isset($_POST["submit"])) {
     include "../dbconnect.php";
     $email = $_POST['email'];

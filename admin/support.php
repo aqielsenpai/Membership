@@ -1,14 +1,14 @@
 <?php
 session_start();
 if (isset($_SESSION['sessionid'])) {
-    $member_email = $_SESSION['member_email'];
-    $member_fullname = $_SESSION['member_fullname'];
-    $member_id = $_SESSION['member_id'];
-    $member_phonenumber = $_SESSION['member_phonenumber'];
+    $admin_email = $_SESSION['admin_email'];
+    $admin_password = $_SESSION['admin_password'];
+    $admin_id = $_SESSION['admin_id'];
 } else {
     echo "<script>alert('No session available. Please login.');</script>";
     echo "<script> window.location.replace('login.php')</script>";
 }
+
 
 include "../dbconnect.php";
 if (isset($_POST["submit"])) {
@@ -42,7 +42,7 @@ if (isset($_GET["operation"])) {
     }
 }
 
-$sqlloadevents = "SELECT `message_id`, `message_title`, `message_content`, `member_id`, `message_date` FROM `tbl_messages` WHERE `member_id` = $member_id  ";
+$sqlloadevents = "SELECT `message_id`, `message_title`, `message_content`, `member_id`, `message_date` FROM `tbl_messages`   ";
 $results_per_page = 10;
 if (isset($_GET['pageno'])) {
     $pageno = (int)$_GET['pageno'];

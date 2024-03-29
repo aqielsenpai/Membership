@@ -11,7 +11,20 @@ if (isset($_SESSION['sessionid'])) {
 }
 
 include "../dbconnect.php";
-$sqlloadnews = "SELECT `news_id`, `news_title`, `news_desc`, `news_date` FROM `tbl_news` ";
+if (isset($_GET['search'])) {
+    $searchtext = $_GET['searchtext'];
+    $option = $_GET['option'];
+    if ($option == "title") {
+        $sqlloadnews = "SELECT `news_id`, `news_title`, `news_desc`, `news_date` FROM `tbl_news` WHERE news_title LIKE '%$searchtext%' ";
+    }
+    if ($option == "news") {
+        $sqlloadnews = "SELECT `news_id`, `news_title`, `news_desc`, `news_date` FROM `tbl_news` WHERE news_desc LIKE '%$searchtext%' ";
+    }
+} else {
+    $sqlloadnews = "SELECT `news_id`, `news_title`, `news_desc`, `news_date` FROM `tbl_news` ";
+}
+
+
 $results_per_page = 10;
 if (isset($_GET['pageno'])) {
     $pageno = (int)$_GET['pageno'];
@@ -53,8 +66,25 @@ $starting_index = ($pageno - 1) * $results_per_page + 1;
         <a href="resources.php" class="w3-bar-item w3-button w3-mobile">Resources</a>
         <a href="support.php" class="w3-bar-item w3-button w3-mobile">Support</a>
         <a href="profile.php" class="w3-bar-item w3-button w3-mobile">Profile</a>
-        <a href="#" class="w3-bar-item w3-button w3-mobile">Logout</a>
+        <a href="logout.php" class="w3-bar-item w3-button w3-mobile">Logout</a>
     </div>
+
+    <form action="index.php" method="get">
+        <div class="w3-row w3-container w3-card w3-round w3-margin w3-center">
+            <div class="w3-third w3-container w3-padding">
+                <input class="w3-input" name="searchtext" placeholder="enter your search here">
+            </div>
+            <div class="w3-third w3-container w3-padding">
+                <select class="w3-input" name="option">
+                    <option value="title">Title</option>
+                    <option value="news">News</option>
+                </select>
+            </div>
+            <div class="w3-third w3-container w3-padding ">
+                <button class="w3-button w3-teal " name="search" value="search"> Search</button>
+            </div>
+        </div>
+    </form>
 
     <div class="w3-container w3-padding-large">
         <?php

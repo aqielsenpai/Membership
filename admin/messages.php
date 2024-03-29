@@ -1,14 +1,14 @@
 <?php
 session_start();
 if (isset($_SESSION['sessionid'])) {
-    $member_email = $_SESSION['member_email'];
-    $member_fullname = $_SESSION['member_fullname'];
-    $member_id = $_SESSION['member_id'];
-    $member_phonenumber = $_SESSION['member_phonenumber'];
+    $admin_email = $_SESSION['admin_email'];
+    $admin_password = $_SESSION['admin_password'];
+    $admin_id = $_SESSION['admin_id'];
 } else {
     echo "<script>alert('No session available. Please login.');</script>";
     echo "<script> window.location.replace('login.php')</script>";
 }
+
 
 include "../dbconnect.php";
 
@@ -25,9 +25,9 @@ if (isset($_GET['message_id'])) {
 
 if (isset($_POST["submit"])) {
     $message_id = $_POST["message_id"];
-    $member_id = $_POST["member_id"];
+    $admin_id = $_POST["admin_id"];
     $messagedetails_content = $_POST["messagedetails_content"];
-    $sqlinsertmessage = "INSERT INTO `tbl_messagedetails`(`message_id`, `messagedetails_content`, `member_id`) VALUES ( ' $message_id', ' $messagedetails_content', ' $member_id')";
+    $sqlinsertmessage = "INSERT INTO `tbl_messagedetails`(`message_id`, `messagedetails_content`, `member_id`) VALUES ( ' $message_id', ' $messagedetails_content', ' $admin_id')";
     if ($conn->query($sqlinsertmessage) === TRUE) {
 
         echo "<script> alert(' Success')</script>";
@@ -54,7 +54,7 @@ if (isset($_POST["submit"])) {
 </head>
 
 <body>
-<div class="w3-container w3-teal w3-padding-large">
+    <div class="w3-container w3-teal w3-padding-large">
         <h1>Membership</h1>
         <a href = "support.php" class="w3-teal w3-right w3-button"  class="w3-bar-item w3-button w3-mobile">Back</a>
         <a class="w3-teal w3-right w3-button" onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button w3-mobile">Reply</a>
@@ -118,7 +118,7 @@ if (isset($_POST["submit"])) {
 
                 <textarea class="w3-input w3-border w3-round" type="text" name="messagedetails_content" id="idmessage" placeholder="Please enter your message" rows="10" cols="30" required></textarea><br>
                 <input type="hidden" name="message_id" value="<?php echo $message_id ?>"><br>
-                <input type="hidden" name="member_id" value="<?php echo $member_id ?>"><br>
+                <input type="hidden" name="admin_id" value="<?php echo $admin_id ?>"><br>
                 <input class="w3-button w3-teal w3-round" type="submit" name="submit"><br>
 
 

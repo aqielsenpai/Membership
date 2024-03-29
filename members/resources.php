@@ -82,7 +82,7 @@ function uploadFile($resources)
         <a href="resources.php" class="w3-bar-item w3-button w3-mobile">Resources</a>
         <a href="support.php" class="w3-bar-item w3-button w3-mobile">Support</a>
         <a href="profile.php" class="w3-bar-item w3-button w3-mobile">Profile</a>
-        <a href="#" class="w3-bar-item w3-button w3-mobile">Logout</a>
+        <a href="logout.php" class="w3-bar-item w3-button w3-mobile">Logout</a>
        
     </div>
 
